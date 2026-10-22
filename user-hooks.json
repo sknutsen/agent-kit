@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": "./hooks/session-context.py",
+        "timeout": 5
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "./hooks/shell-safety.py",
+        "failClosed": true,
+        "timeout": 8
+      }
+    ],
+    "beforeReadFile": [
+      {
+        "command": "./hooks/secret-read.py",
+        "failClosed": true,
+        "timeout": 8
+      }
+    ],
+    "beforeTabFileRead": [
+      {
+        "command": "./hooks/secret-read.py",
+        "failClosed": true,
+        "timeout": 8
+      }
+    ],
+    "preToolUse": [
+      {
+        "command": "./hooks/write-scope.py",
+        "matcher": "Write|StrReplace|Delete|EditNotebook|ApplyPatch",
+        "failClosed": true,
+        "timeout": 8
+      }
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "agent-kit",
+  "version": "0.4.0",
+  "shared_skills": [
+    "code-review",
+    "architecture-analysis",
+    "git-commit",
+    "create-pull-request"
+  ],
+  "shared_agents": [
+    "code-reviewer",
+    "architecture-analyst"
+  ],
+  "local_only_skills": [
+    "agent-conventions",
+    "manage-skills",
+    "review-skills",
+    "recurring-jobs"
+  ],
+  "local_only_agents": [
+    "skill-reviewer"
+  ],
+  "hooks": [
+    "shell-safety.py",
+    "secret-read.py",
+    "write-scope.py",
+    "session-context.py",
+    "lib.py",
+    "policy.json",
+    "claude-pretool.py"
+  ]
+}

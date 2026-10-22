@@ -1,0 +1,7 @@
+.DS_Store
+*.pyc
+__pycache__/
+.cursor/hooks/state/
+.mypy_cache/
+auth.json
+**/auth.json

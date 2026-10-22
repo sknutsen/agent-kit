@@ -1,0 +1,89 @@
+{
+  "shell": {
+    "wrappers": [
+      "sudo",
+      "doas",
+      "env",
+      "nice",
+      "nohup",
+      "command",
+      "builtin",
+      "time",
+      "stdbuf",
+      "unbuffer",
+      "rlwrap",
+      "watch",
+      "timeout",
+      "ionice"
+    ],
+    "network": [
+      "curl",
+      "curl.exe",
+      "wget",
+      "wget.exe",
+      "ncat",
+      "netcat",
+      "nc",
+      "invoke-webrequest",
+      "invoke-restmethod",
+      "iwr"
+    ],
+    "deny_regex": [
+      "\\bmkfs\\.",
+      "\\bdd\\s+if=",
+      "\\bFormat-Volume\\b",
+      "\\bdrop\\s+database\\b"
+    ],
+    "ask_regex": [
+      "\\bgit\\s+push\\b.*(\\s--force\\b|\\s-f\\b)",
+      "\\bgit\\s+push\\b.*\\s--force-with-lease\\b",
+      "\\bgit\\s+reset\\s+--hard\\b",
+      "\\bgit\\s+checkout\\s+--\\s",
+      "\\bgit\\s+restore\\s+--source\\b",
+      "\\bchmod\\s+-R\\s+0?777\\b"
+    ]
+  },
+  "read": {
+    "deny_path_regex": [
+      "(^|/)keepass(/|$)",
+      "\\.kdbx$",
+      "(^|/)id_(rsa|ed25519|ecdsa|dsa)$",
+      "\\.age-key\\.txt$",
+      "(^|/)age\\.key$"
+    ],
+    "ask_path_regex": [
+      "(^|/)\\.env$",
+      "(^|/)\\.env\\.[^/]+$",
+      "\\.sops\\.ya?ml$",
+      "(^|/)secrets\\.ya?ml$",
+      "(^|/)credentials\\.json$",
+      "\\.pem$"
+    ],
+    "allow_path_regex": [
+      "\\.env\\.example$",
+      "\\.env\\.sample$",
+      "\\.env\\.template$"
+    ],
+    "deny_content_regex": [
+      "^-----BEGIN OPENSSH PRIVATE KEY",
+      "^-----BEGIN RSA PRIVATE KEY",
+      "^-----BEGIN EC PRIVATE KEY",
+      "^-----BEGIN DSA PRIVATE KEY",
+      "^-----BEGIN PRIVATE KEY",
+      "^-----BEGIN ENCRYPTED PRIVATE KEY",
+      "^-----BEGIN PGP PRIVATE KEY BLOCK",
+      "^-----BEGIN AGE ENCRYPTED FILE"
+    ]
+  },
+  "write": {
+    "outside_workspace": "ask",
+    "expand_git_root": true,
+    "include_cursor_project_dir": true,
+    "deny_path_regex": [
+      "(^|/)\\.cursor/hooks\\.json$",
+      "(^|/)\\.cursor/hooks(/|$)",
+      "(^|/)\\.claude/settings\\.json$",
+      "(^|/)\\.claude/hooks(/|$)"
+    ]
+  }
+}
