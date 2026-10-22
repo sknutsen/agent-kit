@@ -7,6 +7,7 @@ Personal kit for Cursor, Claude Code, and Pi on macOS, Linux, and Windows. See R
 ```bash
 python3 scripts/install.py
 python3 scripts/install.py --status
+nix run .#install    # Nix hosts; same installer, from a checkout
 python3 scripts/sync_project.py <repo>
 python3 scripts/sync_project.py <repo> --work
 python3 scripts/test-hooks.sh

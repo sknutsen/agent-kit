@@ -28,6 +28,23 @@ MANAGED_DENY = [
 ]
 
 
+def resolve_kit(explicit: str | None) -> Path:
+    raw = explicit or os.environ.get("AGENT_KIT_REPO")
+    if raw:
+        return Path(raw).expanduser().resolve()
+    return Path(__file__).resolve().parent.parent
+
+
+def set_kit(path: Path) -> None:
+    global KIT
+    if not (path / "scripts" / "install.py").is_file() or not (path / "manifest.json").is_file():
+        raise SystemExit(
+            f"Not an agent-kit checkout: {path}\n"
+            "Run from a clone of this repo, pass --repo, or set AGENT_KIT_REPO."
+        )
+    KIT = path
+
+
 def python_invocation(script: Path) -> tuple[str, list[str]]:
     if os.name == "nt":
         return "py", ["-3", str(script)]
@@ -358,12 +375,17 @@ def status() -> int:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--repo",
+        help="Checkout of this kit (default: this script's parent, or AGENT_KIT_REPO)",
+    )
     parser.add_argument("--uninstall", action="store_true")
     parser.add_argument("--status", action="store_true")
     parser.add_argument("--no-cursor", action="store_true")
     parser.add_argument("--no-claude", action="store_true")
     parser.add_argument("--no-agents-compat", action="store_true")
     args = parser.parse_args()
+    set_kit(resolve_kit(args.repo))
     if args.status:
         raise SystemExit(status())
     if args.uninstall:

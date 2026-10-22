@@ -5,3 +5,6 @@ __pycache__/
 .mypy_cache/
 auth.json
 **/auth.json
+result
+result-*
+.direnv/

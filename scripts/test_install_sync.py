@@ -80,6 +80,23 @@ def test_managed_copy():
     finally:
         shutil.rmtree(tmp)
 
+def test_repo_flag():
+    inst = load("install", ROOT/"scripts"/"install.py")
+    tmp = Path(tempfile.mkdtemp(prefix="agent-kit-repo-flag-"))
+    try:
+        raised = False
+        try:
+            inst.set_kit(tmp)
+        except SystemExit:
+            raised = True
+        check(raised, "set_kit accepted a non-kit path")
+        inst.set_kit(ROOT)
+        check(inst.KIT.resolve() == ROOT.resolve(), "set_kit did not stick")
+        check(inst.resolve_kit(None) == ROOT, "default kit path is not this checkout")
+        print("ok repo flag")
+    finally:
+        shutil.rmtree(tmp)
+
 def test_sync_merge_and_prune():
     sync = load("sync", ROOT/"scripts"/"sync_project.py")
     repo = Path(tempfile.mkdtemp(prefix="agent-kit-repo-"))
@@ -112,7 +129,7 @@ def test_sync_merge_and_prune():
         shutil.rmtree(repo)
 
 def main():
-    test_points_at_kit(); test_claude_unmerge_preserves_other(); test_managed_copy(); test_install_status_symlink(); test_sync_merge_and_prune()
+    test_points_at_kit(); test_claude_unmerge_preserves_other(); test_managed_copy(); test_install_status_symlink(); test_repo_flag(); test_sync_merge_and_prune()
     print("all install/sync tests passed")
 
 if __name__ == "__main__":

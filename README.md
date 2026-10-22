@@ -43,9 +43,32 @@ Claude Code does **not** auto-load `AGENTS.md` unless `CLAUDE.md` imports it. Cu
 
 ## Machine setup
 
+Nix hosts (Apple Silicon macOS, Linux, WSL). Clone first — the installer links `~/.cursor`, `~/.claude`, and `~/.agents` to this checkout, not the Nix store:
+
 ```bash
-# macOS, Linux, WSL
-git clone <this-repo> ~/Code/agent-kit   # or any path you like
+git clone <this-repo> ~/Code/agent-kit   # Linux/WSL: ~/code/agent-kit
+cd ~/Code/agent-kit                      # Linux/WSL: cd ~/code/agent-kit
+nix run .#install
+nix run .#status
+```
+
+`nix develop` (or direnv) puts `python3` and `git` on PATH. `nix run .` is the same as `nix run .#install`.
+
+Home Manager (from `~/.nixconf` or similar):
+
+```nix
+# flake input: agent-kit.url = "github:sknutsen/agent-kit";
+imports = [ inputs.agent-kit.homeModules.default ];
+programs.agent-kit.enable = true;
+```
+
+Activation clones `https://github.com/sknutsen/agent-kit.git` into `~/Code/agent-kit` (Linux/WSL: `~/code/agent-kit`) when that path is missing. It does not pull an existing checkout.
+
+Without Nix:
+
+```bash
+# macOS: ~/Code/agent-kit   Linux/WSL: ~/code/agent-kit
+git clone <this-repo> ~/Code/agent-kit
 cd ~/Code/agent-kit
 python3 scripts/install.py
 python3 scripts/install.py --status
@@ -118,4 +141,5 @@ agents/     subagent prompts
 hooks/      policy.json, Cursor hooks, claude-pretool.py
 scripts/    install.py, sync_project.py, install.ps1
 templates/  AGENTS.md, CLAUDE.md, project-hooks.json
+flake.nix   Nix apps, devShell, Home Manager module
 ```

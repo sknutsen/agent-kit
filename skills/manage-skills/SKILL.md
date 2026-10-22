@@ -35,6 +35,7 @@ After writing, run `review-skills`.
 
 ```bash
 python3 scripts/install.py          # macOS/Linux/WSL: Cursor + Claude Code + ~/.agents
+nix run .#install                   # Nix hosts, from a checkout
 py -3 scripts\install.py           # native Windows
 python3 scripts/install.py --status
 ```
